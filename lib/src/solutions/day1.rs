@@ -1,7 +1,9 @@
+use std::env;
 use std::fs::File;
 use std::io::{self, BufRead, BufReader};
+use std::path::PathBuf;
 
-pub fn print_sum_of_differences(sorted_pairs: Vec<(i32, i32)>) {
+fn print_sum_of_differences(sorted_pairs: Vec<(i32, i32)>) {
     let mut sum = 0;
 
     for (x, y) in sorted_pairs {
@@ -11,10 +13,11 @@ pub fn print_sum_of_differences(sorted_pairs: Vec<(i32, i32)>) {
     println!("{}", sum);
 }
 
-pub fn split_lists() -> Result<Vec<(i32, i32)>, io::Error>{
+fn split_lists(path: &str) -> Result<Vec<(i32, i32)>, io::Error>{
 
-    let file = File::open("../input/input.txt")?;
+    let file = File::open(path)?;
     let reader = BufReader::new(file);
+
 
 
     let mut left_list = Vec::new();
@@ -49,4 +52,16 @@ pub fn split_lists() -> Result<Vec<(i32, i32)>, io::Error>{
 
 
 
+}
+
+
+pub fn day1_solution(path: &str){    
+    
+    print_sum_of_differences(match split_lists(&path){
+        Ok(pairs) => pairs,
+        Err(error) => {
+            eprintln!("Error reading file: {}", error);
+            return;
+        }
+    });
 }
