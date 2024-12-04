@@ -3,14 +3,14 @@ use std::fs::File;
 use std::io::{self, BufRead, BufReader};
 use std::path::PathBuf;
 
-fn print_sum_of_differences(sorted_pairs: Vec<(i32, i32)>) {
+fn print_sum_of_differences(sorted_pairs: Vec<(i32, i32)>) -> i32{
     let mut sum = 0;
 
     for (x, y) in sorted_pairs {
         sum += (x - y).abs();
     }
 
-    println!("{}", sum);
+    sum
 }
 
 fn split_lists(path: &str) -> Result<Vec<(i32, i32)>, io::Error>{
@@ -55,13 +55,13 @@ fn split_lists(path: &str) -> Result<Vec<(i32, i32)>, io::Error>{
 }
 
 
-pub fn day1_solution(path: &str){    
+pub fn day1_solution(path: &str) -> i32{    
     
     print_sum_of_differences(match split_lists(&path){
         Ok(pairs) => pairs,
         Err(error) => {
             eprintln!("Error reading file: {}", error);
-            return;
+            return -1;
         }
-    });
+    })
 }
