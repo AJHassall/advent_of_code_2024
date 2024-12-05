@@ -11,6 +11,10 @@ fn main() {
 
     println!("    part 1 answer: {}", day1);
 
+    let day1 = day1::day1_solution_part_2("../ui/input/day1_input.txt");
+
+    println!("    part 1 answer: {}", day1);
+
     println!("day 2");
 
     let day2_input = file_utils::read_lines("../ui/input/day2_input.txt")

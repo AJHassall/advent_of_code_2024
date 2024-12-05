@@ -13,6 +13,24 @@ fn print_sum_of_differences(sorted_pairs: Vec<(i32, i32)>) -> i32{
     sum
 }
 
+fn calc_similarity_score(sorted_pairs: Vec<(i32, i32)>) -> i32{
+    let mut l = vec![];
+    let mut r = vec![];
+
+    let mut sum =0;
+
+    for (i, j) in sorted_pairs{
+        l.push(i);
+        r.push(j);
+    };
+
+    for i in l{
+        sum += i * r.clone().into_iter().filter(|x| x == &i).count() as i32;
+    }
+
+    sum
+}
+
 fn split_lists(path: &str) -> Result<Vec<(i32, i32)>, io::Error>{
 
     let file = File::open(path)?;
@@ -64,4 +82,17 @@ pub fn day1_solution(path: &str) -> i32{
             return -1;
         }
     })
+    
+}
+
+pub fn day1_solution_part_2(path: &str) -> i32{
+
+    calc_similarity_score(match split_lists(&path){
+        Ok(pairs) => pairs,
+        Err(error) => {
+            eprintln!("Error reading file: {}", error);
+            return -1;
+        }
+    })
+
 }
