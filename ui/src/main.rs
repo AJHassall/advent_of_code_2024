@@ -42,4 +42,21 @@ fn main() {
 
     println!("    part 2 answer: {}", day3_answer_part2);
 
+
+
+
+    println!("day 4");
+    let vals4 = file_utils::read_lines("../ui/input/day4_input.txt");
+
+    let v: &str = &String::from(vals4.unwrap().collect::<Vec<String>>().join("\n"));
+    let input = &day4::string_to_2d_vector(v);
+
+    let day4_answer = day4::word_search(&input, "XMAS");
+
+    println!("    part 1 answer: {}", day4_answer);
+
+    let day4_answer_part2 = day4::pattern_search(&input);
+
+    println!("    part 2 answer: {}", day4_answer_part2);
+
 }
