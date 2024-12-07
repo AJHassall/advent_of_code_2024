@@ -59,4 +59,17 @@ fn main() {
 
     println!("    part 2 answer: {}", day4_answer_part2);
 
+
+    println!("day 5");
+    let vals5 = file_utils::read_lines("../ui/input/day5_input.txt");
+
+    let v: &str = &String::from(vals5.unwrap().collect::<Vec<String>>().join("\n"));
+
+    let day5_answer = day5::part_1(&v);
+
+    //println!("{}", v);
+
+    println!("    part 1 answer: {}", day5_answer);
+
+
 }
