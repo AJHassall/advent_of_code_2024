@@ -1,4 +1,7 @@
+
+use day6::Day6;
 use lib::solutions::*;
+use solution::Solution;
 use utils::file_utils;
 
 mod utils;
@@ -76,6 +79,17 @@ fn main() {
     let day5_answer = day5::part_2(&v);
 
     println!("    part 2 answer: {}", day5_answer);
+
+
+    let mut v:  Vec<Box<dyn Solution>> = vec![];
+
+    v.push(Box::new(Day6{
+        
+    }));
+
+    for i in v{
+        i.part1();
+    }
 
 
 
