@@ -1,7 +1,5 @@
 use std::cmp::Ordering;
 
-use itertools::Itertools;
-
 pub fn part_1(input: &str) -> i32{
 
     let lines = input.split('\n').collect::<Vec<&str>>();
