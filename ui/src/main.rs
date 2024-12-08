@@ -71,9 +71,12 @@ fn main() {
 
     let day5_answer = day5::part_1(&v);
 
-    //println!("{}", v);
-
     println!("    part 1 answer: {}", day5_answer);
+
+    let day5_answer = day5::part_2(&v);
+
+    println!("    part 2 answer: {}", day5_answer);
+
 
 
 }
