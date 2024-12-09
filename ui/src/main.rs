@@ -80,15 +80,18 @@ fn main() {
 
     println!("    part 2 answer: {}", day5_answer);
 
-
     let mut v:  Vec<Box<dyn Solution>> = vec![];
 
     v.push(Box::new(Day6{
-        
+        input: file_utils::read_lines("../ui/input/day6_input.txt").unwrap().collect::<Vec<String>>().join("\n")
     }));
 
     for i in v{
-        i.part1();
+
+        i.print_day();
+        println!("    part 1 answer: {}", i.part1());
+        println!("    part 2 answer: {}", i.part2());
+
     }
 
 
