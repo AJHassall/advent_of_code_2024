@@ -34,14 +34,47 @@ impl Solution for Day8 {
             
             anti_node_positions.extend(new_anti_nodes.into_iter().flatten());
         }
-        
-        let r = anti_node_positions.iter()
-            .filter(|(y,x)| *y >= 0 && y < &y_upper && *x >= 0 && x <  &x_upper)
-            .filter(|a| !node_locations.values()
-            .flatten()
-            .contains(*a));
 
-        r.collect::<Vec<_>>().len().to_string()
+        println!("{:?}", anti_node_positions.len());//.iter().unique().collect::<Vec<_>>());
+        println!("{:?}", anti_node_positions.iter().unique().collect::<Vec<_>>().len());
+
+        println!("{}", anti_node_positions.iter()
+        .unique()
+        .filter(|(y,x)| *y >= 0 && y < &y_upper && *x >= 0 && x <  &x_upper).collect::<Vec<_>>().len());
+
+        println!("{}", anti_node_positions.iter()
+            .unique()
+                .filter(|(y,x)| *y >= 0 && y < &y_upper && *x >= 0 && x <  &x_upper)  
+            .filter(|&&x | 
+                !node_locations.values().flatten().contains(&x))
+            .collect::<Vec<_>>().len());
+
+        let r = anti_node_positions.iter()
+             .unique()
+             .filter(|(y,x)| *y >= 0 && y <&y_upper && *x >= 0 && x <  &x_upper)  
+            .collect::<Vec<_>>();
+        
+        let mut grid  = self.input.split('\n').map(|x| x.chars().collect::<Vec<_>>()).collect::<Vec<Vec<_>>>();
+
+        for (y, x) in &r[..]  {
+            grid[*y as usize][*x as usize] = '#';
+        }
+
+
+        println!("========");
+
+        for (y, row) in  grid.iter().enumerate(){
+            for (x, cell) in row.iter().enumerate(){
+                print!("{}", cell);
+        
+            }
+            println!();
+        }
+
+
+        r.len().to_string()
+
+      //  r.collect::<Vec<_>>().len().to_string()
         
     //    "".to_string()
     }
@@ -66,10 +99,12 @@ fn get_all_node_positions(input: &str) -> (i32, i32, HashMap<char, Vec<(i32, i32
 
     for (y, row) in  grid.iter().enumerate(){
         for (x, cell) in row.iter().enumerate(){
+            print!("{}", cell);
             if *cell != '.' {
                 node_positions.entry(cell.to_owned()).or_insert_with(Vec::new).push((y as i32,  x as i32));
             }
         }
+        println!();
     }
 
     let y_upper = grid.len() as i32;
