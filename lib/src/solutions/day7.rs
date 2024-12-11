@@ -11,31 +11,63 @@ pub struct Day7 {
 impl Solution for Day7 {
 
     fn print_day(&self) {
-        
+        println!("day 7");
     }
+
     fn part1(&self) -> String{
-        "".to_string()
+        let mut total_of_valid = 0;
+        for line in self.input.split('\n') {
+
+            let add = |a :_, b: _| a+b;
+            let mult = |a :_, b: _| a*b;
+
+            match is_possible(line, vec![&add,&mult]) {
+                Some(product)=>{
+                    total_of_valid += product;
+
+                }                
+                _=>{}
+            }
+            
+        }
+
+
+        total_of_valid.to_string()
     }
 
     fn part2(&self) -> String {
-        "".to_string()
+        let mut total_of_valid = 0;
+        for line in self.input.split('\n') {
+
+            let add = |a :_, b: _| a+b;
+            let mult = |a :_, b: _| a*b;
+            let conc = |a :i64, b: i64| (a.to_string() + &b.to_string()).parse::<i64>().unwrap();
+
+            match is_possible(line, vec![&add,&mult, &conc]) {
+                Some(product)=>{
+                    total_of_valid += product;
+
+                }                
+                _=>{}
+            }
+            
+        }
+
+
+        total_of_valid.to_string()
     }
 }
 
 
-fn is_possible(str: &str) -> bool{
+fn is_possible(str: &str, methods: Vec<&dyn Fn(i64, i64) -> i64>) -> Option<i64>{
 
     let (total, numbers) = str.split_once(':').unwrap();
 
-    let total: i32 = total.parse().unwrap();
-    let number: Vec<i32> = numbers.split_whitespace().map(|n| n.parse().unwrap()).collect();
+    let total: i64 = total.parse().unwrap();
+    let number: Vec<i64> = numbers.split_whitespace().map(|n| n.parse().unwrap()).collect();
 
-    let add = |a :i32, b: i32| a+b;
-    let mult = |a :i32, b: i32| a*b;
-
-
-    let characters = vec![add, mult];
-    let length = 2; // Desired length of inner vectors
+    let characters = methods;
+    let length = number.len()-1; // Desired length of inner vectors
 
     let mut combinations = Vec::new();
 
@@ -48,28 +80,22 @@ fn is_possible(str: &str) -> bool{
     }
     //output should be [[add, mult], [mult, add]]
 
+    
     for c in combinations{
-        let mut result =0;
-        for func in c{
-            result = func(number[0], number[1]);
-            
-            for l in number.iter().skip(2){
+        let mut i = c.iter();
 
-               
-                result = func(result, *l )
-            
-            }
+        let mut product = number.first().unwrap().clone();
+
+        for s in number.iter().skip(1){
+            product = i.next().unwrap()(product, s.clone());
         }
 
-        if result == total {
-            return true;
+        if product== total{
+            return Some(product);
         }
-        println!("{}", result);
     }
 
-    total == number.iter().sum();
-
-    false
+    None
 
 
 }
@@ -80,13 +106,18 @@ mod tests {
 
     #[test]
     fn is_possible_test() {
-        // let input = "190: 10 19";
 
-        // assert_eq!(is_possible(input), true);
+        let add = |a :_, b: _| a+b;
+        let mult = |a :_, b: _| a*b;
+        let conc = |a :i64, b: i64| (a.to_string() + &b.to_string()).parse::<i64>().unwrap();
+
+        let input = "190: 10 19";
+
+        assert_eq!(is_possible(input, vec![&add, &mult] ), Some(190));
 
         let input = "3267: 81 40 27";
 
-        assert_eq!(is_possible(input), true);
+        assert_eq!(is_possible(input, vec![&add, &mult]), Some(3267));
     }
 
 
@@ -103,11 +134,11 @@ mod tests {
 21037: 9 7 18 13
 292: 11 6 16 20";
 
-        let solution = Day7{input: input.to_string()};
+        let solution: Day7 = Day7{input: input.to_string()};
 
         let result = solution.part1();
 
-    //    assert_eq!(result, "3749");
+        assert_eq!(result, "3749");
     }
 
 }

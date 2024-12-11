@@ -1,5 +1,7 @@
 
 use day6::Day6;
+use day7::Day7;
+use day8::Day8;
 use lib::solutions::*;
 use solution::Solution;
 use utils::file_utils;
@@ -84,6 +86,12 @@ fn main() {
 
     v.push(Box::new(Day6{
         input: file_utils::read_lines("../ui/input/day6_input.txt").unwrap().collect::<Vec<String>>().join("\n")
+    }));
+    v.push(Box::new(Day7{
+        input: file_utils::read_lines("../ui/input/day7_input.txt").unwrap().collect::<Vec<String>>().join("\n")
+    }));
+    v.push(Box::new(Day8{
+        input: file_utils::read_lines("../ui/input/day8_input.txt").unwrap().collect::<Vec<String>>().join("\n")
     }));
 
     for i in v{
