@@ -1,6 +1,6 @@
 
 
-pub trait Solution{
+pub trait Solution: Send + Sync{
     fn print_day(&self){
       panic!();
     }

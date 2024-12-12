@@ -5,9 +5,6 @@ pub struct Day7 {
     pub input: String,
 }
 
-
-
-
 impl Solution for Day7 {
 
     fn print_day(&self) {
@@ -78,8 +75,6 @@ fn is_possible(str: &str, methods: Vec<&dyn Fn(i64, i64) -> i64>) -> Option<i64>
         }
         combinations.push(combination);
     }
-    //output should be [[add, mult], [mult, add]]
-
     
     for c in combinations{
         let mut i = c.iter();
@@ -87,6 +82,9 @@ fn is_possible(str: &str, methods: Vec<&dyn Fn(i64, i64) -> i64>) -> Option<i64>
         let mut product = number.first().unwrap().clone();
 
         for s in number.iter().skip(1){
+            if product > total {
+                return None;
+            }
             product = i.next().unwrap()(product, s.clone());
         }
 
